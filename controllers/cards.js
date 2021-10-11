@@ -34,7 +34,7 @@ const deleteCard = (req, res, next) => {
     .then((card) => {
       if (card.owner._id.toString() === req.user._id) {
         Card.deleteOne(card).then(() => {
-          res.status(200).send({ message: 'карточка удалена' });
+          res.status(200).send({ message: 'Карточка удалена' });
         });
       } else {
         throw new ForbiddenError('У тебя нет прав на удаление этой карточки');
@@ -42,9 +42,9 @@ const deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadReqError('Карточка по указанному id не найдена'));
+        throw new BadReqError('Карточка по указанному id не найдена');
       } else if (err.message === 'IncorrectId') {
-        next(new NotFoundError('Карточка по указанному id не найдена'));
+        throw new NotFoundError('Карточка по указанному id не найдена');
       } else next(err);
     });
 };
@@ -52,7 +52,7 @@ const deleteCard = (req, res, next) => {
 const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $addToSet: { likes: req.user._id } },
+    { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
     { new: true },
   )
     .orFail(() => {
@@ -74,7 +74,7 @@ const likeCard = (req, res, next) => {
 const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $pull: { likes: req.user._id } },
+    { $pull: { likes: req.user._id } }, // убрать _id из массива
     { new: true },
   )
     .orFail(() => {

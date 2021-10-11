@@ -5,14 +5,14 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    default: 'Вадим Черепанов',
+    default: 'Вадим',
     minlength: 2,
     maxlength: 30,
   },
 
   about: {
     type: String,
-    default: 'Приемник Билла Гейтса',
+    default: 'Черепанов',
     minlength: 2,
     maxlength: 30,
   },

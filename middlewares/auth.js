@@ -3,6 +3,7 @@ const NotAuthError = require('../errors/not-auth-err');
 
 const extractBearerToken = (header) => header.replace('Bearer ', '');
 
+// eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
@@ -18,7 +19,7 @@ module.exports = (req, res, next) => {
     throw new NotAuthError('Необходима авторизация');
   }
 
-  req.user = payload;
+  req.user = payload; // записываем пейлоуд в объект запроса
 
-  next();
+  next(); // пропускаем запрос дальше
 };

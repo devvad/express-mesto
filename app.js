@@ -20,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
-app.use(requestLogger);
+app.use(requestLogger); // подключаем логгер запросов
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -45,7 +45,7 @@ app.use('/', require('./routes/users'));
 app.use('/', require('./routes/cards'));
 app.use('*', require('./routes/NotFound'));
 
-app.use(errorLogger);
+app.use(errorLogger); // подключаем логгер ошибок
 
 app.use(errors());
 app.use((err, req, res, next) => {
