@@ -40,7 +40,7 @@ const deleteCard = (req, res, next) => {
         throw new ForbiddenError('У тебя нет прав на удаление этой карточки');
       }
     })
-    .catch((err) => {
+    .next((err) => {
       if (err.name === 'CastError') {
         throw new BadReqError('Карточка по указанному id не найдена');
       } else if (err.message === 'IncorrectId') {
@@ -61,7 +61,7 @@ const likeCard = (req, res, next) => {
     .then((card) => {
       res.status(200).send(card);
     })
-    .catch((err) => {
+    .next((err) => {
       if (err.name === 'CastError') {
         throw new BadReqError('Карточка по указанному id не найдена');
       } else if (err.message === 'IncorrectId') {
@@ -83,7 +83,7 @@ const dislikeCard = (req, res, next) => {
     .then((card) => {
       res.status(200).send(card);
     })
-    .catch((err) => {
+    .next((err) => {
       if (err.name === 'CastError') {
         throw new BadReqError('Карточка по указанному id не найдена');
       } else if (err.message === 'IncorrectId') {
